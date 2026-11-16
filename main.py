@@ -2,6 +2,16 @@ from dataclasses import dataclass
 from random import randint
 from drafter import *
 from bakery import assert_equal
+set_website_title("The Casino")
+set_site_information(
+    author="Andrew Arnold",
+    description="A virtual casino that teaches players about gambling risks using fake money.",
+    sources="Drafter documentation and gambling support websites.",
+    planning=[],
+    links=[]
+)
+hide_debug_information()
+set_website_framed(False)
 @dataclass
 class GameRecord:
     game_name: str
@@ -68,7 +78,7 @@ def index(state: State)->Page:
     """Shows the home page."""
     return Page(state, [
         Header("🎰 THE CASINO 🎰"),
-        Header("🎲 PLAY - LEARN - BE AWARE 🎲"),
+        Header("🎲PLAY-LEARN-BE AWARE🎲"),
         Text("🎉 Welcome to your virtual casino!"),
         Header("💰 STARTING BALANCE: $100"),
         Text("💵 Every player starts with $100 in fake money."),
