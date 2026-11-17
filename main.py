@@ -61,7 +61,7 @@ def complete_round(state: State, game_name: str, bet_amount: float, won: bool, p
     if won:
         state.total_winnings += payout
         result = "Win"
-        state.last_result = "You won $" + str(round(payout - bet_amount, 2))
+        state.last_result = "🎉 You won $" + str(round(payout - bet_amount, 2))
     else:
         state.total_losses += bet_amount
         result = "Loss"
@@ -78,16 +78,16 @@ assert_equal(len(state_test.game_history), 1)
 def index(state: State)->Page:
     """Shows the home page."""
     return Page(state, [
-        Header("THE CASINO"),
-        Header("PLAY, LEARN, BE AWARE"),
+        Header("🎰 THE CASINO 🎰"),
+        Header("PLAY - LEARN - BE AWARE"),
         Text("Welcome to your virtual casino!"),
-        Header("STARTING BALANCE: $100"),
+        Header("💰 STARTING BALANCE: $100"),
         Text("Every player starts with $100 in fake money."),
         Text("Play slots or roulette and see how long your money lasts."),
         Text("Learn how gambling can affect your money."),
-        Button("ENTER CASINO", "casino_lobby"),
-        Button("HELP AND INFORMATION", "help_page"),
-        Text("This simulation does not use real money.")
+        Button("🎰 ENTER CASINO", "casino_lobby"),
+        Button("❓ HELP AND INFORMATION", "help_page"),
+        Text("⚠️ This simulation does not use real money.")
     ])
 assert_equal(isinstance(index(initial_state(100.0)), Page), True)
 assert_equal(isinstance(index(initial_state(50.0)), Page), True)
@@ -96,24 +96,24 @@ assert_equal(isinstance(index(initial_state(200.0)), Page), True)
 def casino_lobby(state: State)->Page:
     """Shows the casino lobby."""
     return Page(state, [
+        Header("🎰 THE CASINO 🎰"),
         Header("CASINO LOBBY"),
-        Header("YOUR BALANCE"),
+        Header("💰 YOUR BALANCE"),
         Header("$" + str(round(state.balance, 2))),
-        Header("CHOOSE YOUR GAME"),
+        Header("🎮 CHOOSE YOUR GAME"),
         Header("🎰 SLOTS"),
         Text("20% chance to win."),
-        Button("PLAY SLOTS", "slots_game"),
+        Button("🎰 PLAY SLOTS", "slots_game"),
         Header("🎲 ROULETTE"),
         Text("47.37% chance to win."),
-        Button("PLAY ROULETTE", "roulette_game"),
-        Header("YOUR STATS"),
+        Button("🎲 PLAY ROULETTE", "roulette_game"),
+        Header("📊 YOUR STATS"),
         Text("Total Wagered: $" + str(round(state.total_wagered, 2))),
         Text("Rounds Played: " + str(len(state.game_history))),
-        Header("MORE INFORMATION"),
-        Button("VIEW WALLET", "wallet_page"),
-        Button("FINAL REPORT", "final_report"),
+        Button("💰 VIEW WALLET", "wallet_page"),
+        Button("📋 FINAL REPORT", "final_report"),
         Button("GAME RULES", "game_rules"),
-        Button("HELP", "help_page")
+        Button("❓ HELP", "help_page")
     ])
 assert_equal(isinstance(casino_lobby(initial_state(100.0)), Page), True)
 assert_equal(isinstance(casino_lobby(initial_state(50.0)), Page), True)
@@ -122,7 +122,7 @@ assert_equal(isinstance(casino_lobby(initial_state(200.0)), Page), True)
 def game_rules(state: State)->Page:
     """Shows the rules and odds."""
     return Page(state, [
-        Header("GAME RULES"),
+        Header("📖 GAME RULES"),
         Header("🎰 SLOTS"),
         Text("Chance to win: 20%"),
         Text("Chance to lose: 80%"),
@@ -134,11 +134,11 @@ def game_rules(state: State)->Page:
         Text("House edge: 5.26%"),
         Text("Choose red or black."),
         Text("Winning pays 2 times your bet."),
-        Header("HOUSE EDGE"),
+        Header("🏦 HOUSE EDGE"),
         Text("The casino has an advantage over time."),
         Text("Winning a few times does not guarantee profit."),
         Text("The more you bet, the more money you risk losing."),
-        Button("BACK TO LOBBY", "casino_lobby")
+        Button("⬅️ BACK TO LOBBY", "casino_lobby")
     ])
 assert_equal(isinstance(game_rules(initial_state(100.0)), Page), True)
 assert_equal(isinstance(game_rules(initial_state(50.0)), Page), True)
@@ -148,8 +148,8 @@ def slots_game(state: State)->Page:
     """Shows the slots page."""
     state.selected_game = "Slots"
     return Page(state, [
-        Header("🎰 SLOT MACHINE"),
-        Header("YOUR BALANCE"),
+        Header("🎰 SLOT MACHINE 🎰"),
+        Header("💰 YOUR BALANCE"),
         Header("$" + str(round(state.balance, 2))),
         Header("777 - 777 - 777"),
         Text("Winning Chance: 20%"),
@@ -159,14 +159,14 @@ def slots_game(state: State)->Page:
         Header("PLACE YOUR BET"),
         Text("Enter your bet amount ($):"),
         TextBox("bet_amount", 5.0, "number"),
-        Header("COLLEGE FUND"),
+        Header("🎓 COLLEGE FUND"),
         Text("You have $500 saved for college."),
         Text("If you run out of money, you can choose to gamble with it."),
-        Text("This is risky because you could lose money meant for school."),
+        Text("⚠️ You could lose money meant for school."),
         Text("Use college fund if balance is zero:"),
         CheckBox("use_college_fund"),
-        Button("SPIN SLOTS", "play_slots"),
-        Button("BACK TO LOBBY", "casino_lobby")
+        Button("🎰 SPIN SLOTS", "play_slots"),
+        Button("⬅️ BACK TO LOBBY", "casino_lobby")
     ])
 state_test = initial_state(100.0)
 assert_equal(isinstance(slots_game(state_test), Page), True)
@@ -186,7 +186,7 @@ def play_slots(state: State, bet_amount: float, use_college_fund: bool)->Page:
             payout = 0.0
         complete_round(state, "Slots", bet_amount, won, payout)
     else:
-        state.last_result = "Invalid bet or not enough money."
+        state.last_result = "⚠️ Invalid bet or not enough money."
     return slots_game(state)
 state_test = initial_state(100.0)
 play_slots(state_test, 5.0, False)
@@ -198,10 +198,10 @@ def roulette_game(state: State)->Page:
     """Shows the roulette page."""
     state.selected_game = "Roulette"
     return Page(state, [
-        Header("🎲 ROULETTE"),
-        Header("YOUR BALANCE"),
+        Header("🎲 ROULETTE 🎲"),
+        Header("💰 YOUR BALANCE"),
         Header("$" + str(round(state.balance, 2))),
-        Header("RED OR BLACK"),
+        Header("🔴 RED OR BLACK ⚫"),
         Text("Winning Chance: 47.37%"),
         Text("Winning Payout: 2x your bet"),
         Header("LAST RESULT"),
@@ -211,14 +211,14 @@ def roulette_game(state: State)->Page:
         TextBox("bet_amount", 5.0, "number"),
         Text("Choose your color:"),
         SelectBox("color", ["red", "black"], "red"),
-        Header("COLLEGE FUND"),
+        Header("🎓 COLLEGE FUND"),
         Text("You have $500 saved for college."),
         Text("You can use it if your balance reaches zero."),
-        Text("Remember that this money is meant for school."),
+        Text("⚠️ Remember that this money is meant for school."),
         Text("Use college fund if balance is zero:"),
         CheckBox("use_college_fund"),
-        Button("SPIN ROULETTE", "play_roulette"),
-        Button("BACK TO LOBBY", "casino_lobby")
+        Button("🎲 SPIN ROULETTE", "play_roulette"),
+        Button("⬅️ BACK TO LOBBY", "casino_lobby")
     ])
 state_test = initial_state(100.0)
 assert_equal(isinstance(roulette_game(state_test), Page), True)
@@ -242,7 +242,7 @@ def play_roulette(state: State, bet_amount: float, color: str, use_college_fund:
             payout = 0.0
         complete_round(state, "Roulette", bet_amount, won, payout)
     else:
-        state.last_result = "Invalid bet or not enough money."
+        state.last_result = "⚠️ Invalid bet or not enough money."
     return roulette_game(state)
 state_test = initial_state(100.0)
 play_roulette(state_test, 5.0, "red", False)
@@ -259,20 +259,20 @@ def wallet_page(state: State)->Page:
         line += " | Balance: $" + str(round(game.balance_after, 2))
         history.append(line)
     return Page(state, [
-        Header("YOUR WALLET"),
+        Header("💰 YOUR WALLET"),
         Header("CURRENT BALANCE"),
         Header("$" + str(round(state.balance, 2))),
         Text("Starting Balance: $100"),
-        Text("College Fund Remaining: $" + str(round(state.college_fund_balance, 2))),
-        Header("STATISTICS"),
+        Text("🎓 College Fund Remaining: $" + str(round(state.college_fund_balance, 2))),
+        Header("📊 STATISTICS"),
         Text("Total Wagered: $" + str(round(state.total_wagered, 2))),
         Text("Total Payouts: $" + str(round(state.total_winnings, 2))),
         Text("Lost Bets: $" + str(round(state.total_losses, 2))),
         Text("Rounds Played: " + str(len(state.game_history))),
-        Header("GAME HISTORY"),
+        Header("📜 GAME HISTORY"),
         BulletedList(history),
-        Button("FINAL REPORT", "final_report"),
-        Button("BACK TO LOBBY", "casino_lobby")
+        Button("📋 FINAL REPORT", "final_report"),
+        Button("⬅️ BACK TO LOBBY", "casino_lobby")
     ])
 assert_equal(isinstance(wallet_page(initial_state(100.0)), Page), True)
 assert_equal(isinstance(wallet_page(initial_state(50.0)), Page), True)
@@ -287,23 +287,23 @@ def final_report(state: State)->Page:
         history.append(line)
     net_result = state.total_winnings - state.total_wagered
     return Page(state, [
-        Header("FINAL REPORT"),
+        Header("📋 FINAL REPORT"),
         Header("YOUR RESULTS"),
         Text("Starting Balance: $100"),
-        Header("Final Balance: $" + str(round(state.balance, 2))),
+        Header("💰 Final Balance: $" + str(round(state.balance, 2))),
         Text("Total Wagered: $" + str(round(state.total_wagered, 2))),
         Text("Total Payouts: $" + str(round(state.total_winnings, 2))),
         Text("Net Result: $" + str(round(net_result, 2))),
         Text("Total Rounds: " + str(len(state.game_history))),
-        Header("YOUR GAMES"),
+        Header("📜 YOUR GAMES"),
         BulletedList(history),
-        Header("THE REALITY OF GAMBLING"),
+        Header("⚠️ THE REALITY OF GAMBLING"),
         Text("The casino has an advantage over time."),
         Text("Winning streaks do not guarantee future wins."),
         Text("Gambling repeatedly can drain your money."),
         Text("Think about how much money you risked while playing."),
-        Button("VIEW WALLET", "wallet_page"),
-        Button("BACK TO LOBBY", "casino_lobby")
+        Button("💰 VIEW WALLET", "wallet_page"),
+        Button("⬅️ BACK TO LOBBY", "casino_lobby")
     ])
 assert_equal(isinstance(final_report(initial_state(100.0)), Page), True)
 assert_equal(isinstance(final_report(initial_state(50.0)), Page), True)
@@ -312,35 +312,35 @@ assert_equal(isinstance(final_report(initial_state(200.0)), Page), True)
 def help_page(state: State)->Page:
     """Shows gambling information and support resources."""
     return Page(state, [
-        Header("HELP AND INFORMATION"),
+        Header("❓ HELP AND INFORMATION"),
         Header("ABOUT THIS CASINO"),
         Text("This website uses fake money."),
         Text("No real money is involved."),
-        Header("GAMBLING RISKS"),
+        Header("⚠️ GAMBLING RISKS"),
         Text("Casino games have a house advantage."),
         Text("Winning sometimes does not mean you will profit."),
         Text("Never gamble money needed for important expenses."),
         Text("Avoid chasing losses."),
-        Header("WARNING SIGNS"),
+        Header("🚨 WARNING SIGNS"),
         Text("Spending more money than you planned."),
         Text("Trying to win back money you lost."),
         Text("Gambling with money meant for bills or school."),
         Text("Having trouble stopping gambling."),
-        Header("GAMBLING SUPPORT"),
+        Header("🤝 GAMBLING SUPPORT"),
         Text("If you or someone you know needs help, support is available."),
-        Header("NATIONAL PROBLEM GAMBLING HELPLINE"),
+        Header("📞 NATIONAL PROBLEM GAMBLING HELPLINE"),
         Text("Call or text: 1-800-MY-RESET"),
         Text("Website: www.ncpgambling.org"),
-        Header("1-800-GAMBLER"),
+        Header("📞 1-800-GAMBLER"),
         Text("Call: 1-800-426-2537"),
         Text("Website: www.1800gambler.net"),
         Header("GAMBLERS ANONYMOUS"),
         Text("Call: 855-222-5542"),
         Text("Website: gamblersanonymous.org"),
-        Header("REMEMBER"),
+        Header("💙 REMEMBER"),
         Text("Asking for help is always an option."),
         Text("You do not have to deal with gambling problems alone."),
-        Button("BACK TO LOBBY", "casino_lobby")
+        Button("⬅️ BACK TO LOBBY", "casino_lobby")
     ])
 assert_equal(isinstance(help_page(initial_state(100.0)), Page), True)
 assert_equal(isinstance(help_page(initial_state(50.0)), Page), True)
